@@ -36,7 +36,6 @@ class AuthenticatedSessionController extends Controller
             ->join('categories', 'users.categoryId', '=', 'categories.id')
             ->get();
     
-        // Use o método 'with' para enviar os dados
         return redirect('dashboard')->with([
             'Users' => $Users,
             'UserId' => $UserId,
