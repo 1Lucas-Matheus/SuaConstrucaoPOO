@@ -31,7 +31,6 @@ class AuthenticatedSessionController extends Controller
         $Users = User::all();
         $UserId = Auth::user();
         $page = "Dashboard";
-    
         $usersJoin = User::select('users.categoryId', 'categories.Name')
             ->join('categories', 'users.categoryId', '=', 'categories.id')
             ->get();
