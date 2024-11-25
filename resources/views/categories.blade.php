@@ -39,7 +39,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger rounded">Apagar</button>
                             </form>
-                            <form action="/cu/{{ $category->id }}" method="post" class="mr-2">
+                            <form action="/edit/{{ $category->id }}" method="post" class="mr-2">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-warning rounded">Editar</button>

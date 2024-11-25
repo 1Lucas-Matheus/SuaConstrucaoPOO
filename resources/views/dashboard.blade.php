@@ -46,7 +46,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                     </form>
-                                    <form action="/destroy" method="post">
+                                    <form action="/edit/{{$User->id}}" method="post">
                                         @method('PATCH')
                                         <button type="submit" class="btn btn-warning rounded">Editar</button>
                                     </form>

@@ -57,7 +57,7 @@ Route::put('/update/{id}', [ClientsController::class, 'update'])->middleware(['a
 
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/store', [CategoryController::class, 'store'])->middleware(['auth', 'verified']);
-Route::put('/cu/{id}', [CategoryController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::put('edit/{id}', [CategoryController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::put('/updateCategory/{id}', [CategoryController::class, 'update'])->middleware(['auth', 'verified']);
 Route::get('/destroyCategory/{id}', [CategoryController::class, 'destroy'])->middleware(['auth', 'verified']);
 
