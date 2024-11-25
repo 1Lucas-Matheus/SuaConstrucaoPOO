@@ -51,8 +51,8 @@ Route::get('dashboard', [preDashboard::class, 'index'])->middleware(['auth', 've
 Route::get('/profile/{id}/{categoryId}', [UserProfileController::class, 'index'])->middleware(['auth', 'verified']);
 Route::get('/destroy/{id}', [UserProfileController::class, 'destroy'])->middleware(['auth', 'verified']);
 
-Route::get('/clients', [ClientsController::class, 'clients'])->middleware(['auth', 'verified']);
-Route::put('/edit/{id}', [ClientsController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::get('/clients', [ClientsController::class, 'index'])->middleware(['auth', 'verified']);
+Route::put('/editUser/{id}', [ClientsController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::put('/update/{id}', [ClientsController::class, 'update'])->middleware(['auth', 'verified']);
 
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware(['auth', 'verified']);

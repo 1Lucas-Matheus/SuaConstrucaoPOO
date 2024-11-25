@@ -46,8 +46,8 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                     </form>
-                                    <form action="/edit/{{$User->id}}" method="post">
-                                        @method('PATCH')
+                                    <form action="/editUser/{{$User->id}}" method="post">
+                                        @method('PUT')
                                         <button type="submit" class="btn btn-warning rounded">Editar</button>
                                     </form>
                                     @endif
@@ -77,7 +77,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                         </form>
-                                        <form action="/edit/{{$user->id}}" method="post" class="mr-2">
+                                        <form action="/editUser/{{$user->id}}" method="post" class="mr-2">
                                             @csrf
                                             @method('PUT')
                                             <button type="submit" class="btn btn-warning rounded">Editar</button>
@@ -108,7 +108,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                     </form>
-                                    <form action="/edit/{{$user->id}}" method="post" class="mr-2">
+                                    <form action="/editUser/{{$user->id}}" method="post" class="mr-2">
                                         @csrf
                                         @method('PUT')
                                         <button type="submit" class="btn btn-warning rounded">Editar</button>

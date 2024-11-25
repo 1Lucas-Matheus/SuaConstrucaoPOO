@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientsController extends Controller
 {
-    public function clients(Request $request)
+    public function index(Request $request)
     {
         $Users = User::all();
         $UserId = Auth::user();
@@ -38,7 +38,7 @@ class ClientsController extends Controller
             ->get();
 
         return view(
-            'update',
+            'actions.update',
             [
                 'user' => $user,
                 'categories' => $categories,

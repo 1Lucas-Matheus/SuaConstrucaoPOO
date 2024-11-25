@@ -17,7 +17,7 @@ class CommentsController extends Controller
         $Comments = comments::all();
         $AvaliationsType = Avaliations::all();
         $page = "Adicionar Comentario";
-        return view('CreateComment', [
+        return view('actions.CreateComment', [
             'UserSession' => $UserSession,
             'UserCommented' => $UserCommented,
             'Comments' => $Comments,

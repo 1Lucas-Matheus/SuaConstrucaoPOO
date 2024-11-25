@@ -10,13 +10,20 @@ class CategoryController extends Controller
     public function create()
     {
         $page = "Criar Categoria";
-        return view('createCategory', [
+        return view('actions.createCategory', [
             'page' => $page
         ]);
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name',
+        ], [
+            'name.required' => 'O nome da categoria é obrigatório.',
+            'name.max' => 'O nome da categoria não pode ter mais que 255 caracteres.',
+            'name.unique' => 'Já existe uma categoria com esse nome.',
+        ]);
 
         $category = new Category();
         $category->name = $request->name;
@@ -26,6 +33,7 @@ class CategoryController extends Controller
         return redirect('/categories')->with('message', 'Categoria criada com sucesso');
     }
 
+
     public function edit($id)
     {
         $category = category::findOrFail($id);
@@ -33,12 +41,13 @@ class CategoryController extends Controller
         $page = "Atualizar Categoria";
 
         return view(
-            'updateCategory',
+            'actions.updateCategory',
             [
                 'category' => $category,
                 'categories' => $categories,
                 'page' => $page
-            ]);
+            ]
+        );
     }
 
     public function update(Request $request, $id)
@@ -51,11 +60,13 @@ class CategoryController extends Controller
         $category->updated_at = now();
         $category->save();
 
-        return view('/categories',
-        [
-            'categories' => $categories,
-            'page' => $page
-        ])->with('message', 'Usuário atualizado com sucesso!');
+        return view(
+            '/categories',
+            [
+                'categories' => $categories,
+                'page' => $page
+            ]
+        )->with('message', 'Usuário atualizado com sucesso!');
     }
 
 
