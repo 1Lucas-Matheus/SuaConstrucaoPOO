@@ -19,18 +19,22 @@
             <div>
                 @foreach($categories as $categori)
                 @if($category->id == $categori->id)
-                <form action="/updateCategory/{{$category->id}}" method="POST">
+                <form action="/updateCategory/{{ $category->id }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome:</label>
-                        <input type="text" name="Name" id="Name" class="form-control" value="{{ $category->Name }}" required>
+                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ $category->Name }}" required>
+                        @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="d-flex justify-content-end">
                         <a class="btn btn-secondary mr-3" href="/categories">Cancelar</a>
                         <button type="submit" class="btn btn-success">Salvar Alterações</button>
                     </div>
                 </form>
+
                 @endif
                 @endforeach
             </div>

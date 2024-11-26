@@ -13,9 +13,10 @@ class preDashboard extends Controller
         $UserId = Auth::user();
         $page = "Dashboard";
         
-        $usersJoin = User::select('users.categoryId', 'categories.Name')
-            ->join('categories', 'users.categoryId', '=', 'categories.id')
-            ->get();
+        $usersJoin = User::select('users.id', 'users.name', 'comments.comment')
+        ->join('comments', 'users.id', '=', 'comments.UserComentou') 
+        ->get();
+    
 
         return view('dashboard', [
             'Users' => $Users,

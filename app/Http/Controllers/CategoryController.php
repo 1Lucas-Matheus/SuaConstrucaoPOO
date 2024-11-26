@@ -52,22 +52,22 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
-        $category = category::findOrFail($id);
-        $categories = category::All();
-        $page = "Categorias";
-        $category->Name = $request->Name;
-        $category->id = $request->id;
+        $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,' . $id,
+        ], [
+            'name.required' => 'O nome da categoria é obrigatório.',
+            'name.max' => 'O nome da categoria não pode ter mais que 255 caracteres.',
+            'name.unique' => 'Já existe uma categoria com esse nome.',
+        ]);
+
+        $category = Category::findOrFail($id);
+        $category->name = $request->name;
         $category->updated_at = now();
         $category->save();
 
-        return view(
-            '/categories',
-            [
-                'categories' => $categories,
-                'page' => $page
-            ]
-        )->with('message', 'Usuário atualizado com sucesso!');
+        return redirect('/categories')->with('message', 'Categoria atualizada com sucesso!');
     }
+
 
 
     public function destroy($id)

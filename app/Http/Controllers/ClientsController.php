@@ -49,18 +49,35 @@ class ClientsController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'categoryId' => 'required|exists:categories,id',
+        ], [
+            'name.required' => 'O nome do usuário é obrigatório.',
+            'name.max' => 'O nome do usuário não pode ter mais que 255 caracteres.',
+            'email.required' => 'O e-mail é obrigatório.',
+            'email.email' => 'O e-mail informado não é válido.',
+            'email.unique' => 'Já existe um usuário com este e-mail.',
+            'categoryId.required' => 'A categoria do usuário é obrigatória.',
+            'categoryId.exists' => 'A categoria selecionada não existe.',
+        ]);
+    
         $user = User::findOrFail($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        
         if ($request->password) {
             $user->password = bcrypt($request->password);
         }
+    
         $user->categoryId = $request->categoryId;
         $user->lowDescription = $request->lowDescription;
         $user->longDescription = $request->longDescription;
         $user->updated_at = now();
         $user->save();
-
+    
         return redirect()->route('dashboard', $id)->with('message', 'Usuário atualizado com sucesso!');
     }
+    
 }

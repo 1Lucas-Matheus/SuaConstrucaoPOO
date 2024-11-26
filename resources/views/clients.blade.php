@@ -21,7 +21,6 @@
                 <div class="card my-4 shadow-sm">
                     <div class="card-header bg-dark text-white d-flex justify-content-between">
                         <span><strong>{{ $user->name }}</strong></span>
-                        <span>{{ $usersJoin->where('categoryId', $user->categoryId)->first()->Name }}</span>
                     </div>
                     <div class="card-body">
                         <p class="card-text">{{ $user->lowDescription }}</p>
@@ -33,9 +32,8 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                 </form>
-                                <form action="/editUser/{{$user->id}}" method="post" class="mr-2">
+                                <form action="/editUser/{{$user->id}}" method="get" class="mr-2">
                                         @csrf 
-                                        @method('PUT')
                                         <button type="submit" class="btn btn-warning rounded">Editar</button>
                                     </form>
                                 @endif

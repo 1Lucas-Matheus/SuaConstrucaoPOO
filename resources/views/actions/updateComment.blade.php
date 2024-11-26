@@ -13,7 +13,6 @@
 
     @extends('layouts.navbars')
 
-
     <div id="conteudo" style="margin-left: 220px; margin-top: 70px;">
         <div class="content-area m-5">
             <div>
@@ -29,18 +28,20 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Quem tá recebendo o comentário:</label>
-                            <input type="text" class="form-control mb-2" name="UserComentado" value="{{$comment->UserComentado}}" required>
+                            <input type="hidden" class="form-control mb-2" name="UserComentado" value="{{$comment->UserComentado}}" required >
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Comentário:</label>
-                            <textarea name="comment" class="form-control" required>{{$comment->comment}}</textarea>
+                            <textarea name="comment" class="form-control @error('comment') is-invalid @enderror" required>{{$comment->comment}}</textarea>
+                            @error('comment')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="form-group">
                             <label>Avaliação:</label>
-                            <select name="avaliationId" class="form-control" required>
+                            <select name="avaliationId" class="form-control @error('avaliationId') is-invalid @enderror" required>
                                 @foreach($AvaliationsType as $AvaliationType)
                                 <option value="{{ $AvaliationType->id }}"
                                     @if($AvaliationType->id == $comment->avaliationId) selected @endif>
@@ -48,11 +49,13 @@
                                 </option>
                                 @endforeach
                             </select>
+                            @error('avaliationId')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <input type="submit" class="btn btn-success" value="Atualizar Comentário">
                     </form>
-
                     @endif
                 @endforeach
             </div>

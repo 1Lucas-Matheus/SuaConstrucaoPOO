@@ -52,19 +52,19 @@ Route::get('/profile/{id}/{categoryId}', [UserProfileController::class, 'index']
 Route::get('/destroy/{id}', [UserProfileController::class, 'destroy'])->middleware(['auth', 'verified']);
 
 Route::get('/clients', [ClientsController::class, 'index'])->middleware(['auth', 'verified']);
-Route::put('/editUser/{id}', [ClientsController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::get('/editUser/{id}', [ClientsController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::put('/update/{id}', [ClientsController::class, 'update'])->middleware(['auth', 'verified']);
 
 Route::get('/createCategory', [CategoryController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/store', [CategoryController::class, 'store'])->middleware(['auth', 'verified']);
-Route::put('edit/{id}', [CategoryController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::get('/edit/{id}', [CategoryController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::put('/updateCategory/{id}', [CategoryController::class, 'update'])->middleware(['auth', 'verified']);
 Route::get('/destroyCategory/{id}', [CategoryController::class, 'destroy'])->middleware(['auth', 'verified']);
 
 Route::get('/comment/{id}', [CommentsController::class, 'create'])->middleware(['auth', 'verified']);
 Route::post('/storeComment', [CommentsController::class, 'store'])->middleware(['auth', 'verified']);
 Route::get('/destroyComment/{id}', [CommentsController::class, 'destroy'])->middleware(['auth', 'verified']);
-Route::put('/editComment/{id}', [CommentsController::class, 'edit'])->middleware(['auth', 'verified']);
+Route::get('/editComment/{id}', [CommentsController::class, 'edit'])->middleware(['auth', 'verified']);
 Route::put('/updateComment/{id}', [CommentsController::class, 'update'])->middleware(['auth', 'verified']);
 
 

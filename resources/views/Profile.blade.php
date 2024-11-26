@@ -30,11 +30,11 @@
                     <form action="/comment/{{$user->id}}"><button type="submit" class="btn btn-primary">Comentar</button></form>
                 </div>
                 @foreach($Comments as $comment)
-                    @if($comment->UserComentado == $user->name )
+                    @if($comment->UserComentado == $user->id )
                     <div>
                         <div class="card border shadow mt-3">
                             <div class="card-header text-light bg-dark font-weight-bold">
-                                {{$comment->UserComentou}}
+                            {{ $usersJoin->where('UserComentou', $comment->UserComentou)->first()->name }}
                             </div>
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
@@ -47,9 +47,8 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger rounded">Apagar</button>
                                         </form>
-                                        <form action="/editComment/{{$comment->id}}" method="post" class="mr-2">
+                                        <form action="/editComment/{{$comment->id}}" method="get" class="mr-2">
                                             @csrf
-                                            @method('PUT')
                                             <button type="submit" class="btn btn-warning rounded">Editar</button>
                                         </form>
                                     </div>

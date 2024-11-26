@@ -13,6 +13,10 @@ class UserProfileController extends Controller
         $Comments = Comments::all();
         $Users = User::all();
         $page = "Perfil";
+
+        $usersJoin = Comments::select('comments.UserComentou', 'users.name')
+        ->join('users', 'comments.UserComentou', '=', 'users.id')
+        ->get();
         
         return view('profile',
         [
@@ -20,6 +24,7 @@ class UserProfileController extends Controller
             'id' => $id,
             'category' => $category,
             'Comments' => $Comments,
+            'usersJoin' => $usersJoin,
             'page' => $page
         ]);
     }

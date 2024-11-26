@@ -12,15 +12,14 @@ class CommentsController extends Controller
 {
     public function create($id)
     {
-        $UserCommented = User::findorfail($id);
+        $UserCommented = User::findOrFail($id);
         $UserSession = Auth::user();
-        $Comments = comments::all();
         $AvaliationsType = Avaliations::all();
-        $page = "Adicionar Comentario";
+        $page = "Adicionar Comentário";
+
         return view('actions.CreateComment', [
             'UserSession' => $UserSession,
             'UserCommented' => $UserCommented,
-            'Comments' => $Comments,
             'AvaliationsType' => $AvaliationsType,
             'page' => $page
         ]);
@@ -28,62 +27,82 @@ class CommentsController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'UserComentou' => 'required|exists:users,id',
+            'UserComentado' => 'required|exists:users,id',
+            'comment' => 'required|string|max:1000',
+            'avaliationId' => 'required|exists:avaliations,id',
+        ], [
+            'UserComentou.required' => 'O campo de usuário que comentou é obrigatório.',
+            'UserComentou.exists' => 'O usuário que comentou não existe.',
+            'UserComentado.required' => 'O campo de usuário comentado é obrigatório.',
+            'UserComentado.exists' => 'O usuário comentado não existe.',
+            'comment.required' => 'O comentário é obrigatório.',
+            'comment.string' => 'O comentário deve ser uma string.',
+            'comment.max' => 'O comentário não pode ter mais de 1000 caracteres.',
+            'avaliationId.required' => 'O campo de avaliação é obrigatório.',
+            'avaliationId.exists' => 'A avaliação selecionada não existe.',
+        ]);
+    
         $comments = new Comments();
         $comments->UserComentou = $request->UserComentou;
         $comments->UserComentado = $request->UserComentado;
         $comments->comment = $request->comment;
         $comments->avaliationId = $request->avaliationId;
-        $UserCommented = $comments->UserComentado;
-
+    
         $comments->save();
-
-        return redirect('/dashboard')
-            ->with('UserSession', $UserCommented)
-            ->with('message', 'Comentário adicionado com sucesso');
+    
+        return redirect('/dashboard')->with('message', 'Comentário adicionado com sucesso');
     }
-
 
     public function edit($id)
     {
         $idComment = $id;
         $UserSession = Auth::user();
         $AvaliationsType = Avaliations::all();
-        $comments = comments::all();
-        $page = "Editar comentario";
+        $comments = Comments::all();
+        $page = "Editar comentário";
 
-        return view(
-            'updateComment',
-            [
-                'UserSession' => $UserSession,
-                'idComment' => $idComment,
-                'AvaliationsType' => $AvaliationsType,
-                'page' => $page,
-                'comments' => $comments,
-                'page' => $page
-            ]
-        );
+        return view('actions.updateComment', [
+            'UserSession' => $UserSession,
+            'idComment' => $idComment,
+            'AvaliationsType' => $AvaliationsType,
+            'page' => $page,
+            'comments' => $comments
+        ]);
     }
 
     public function update(Request $request, $id)
     {
-        $comment = comments::findOrFail($id);
-    
+        $request->validate([
+            'UserComentado' => 'required|exists:users,id',
+            'comment' => 'required|string|max:1000',
+            'avaliationId' => 'required|exists:avaliations,id',
+        ], [
+            'UserComentado.required' => 'O campo de usuário comentado é obrigatório.',
+            'UserComentado.exists' => 'O usuário comentado não existe.',
+            'comment.required' => 'O comentário é obrigatório.',
+            'comment.string' => 'O comentário deve ser uma string.',
+            'comment.max' => 'O comentário não pode ter mais de 1000 caracteres.',
+            'avaliationId.required' => 'O campo de avaliação é obrigatório.',
+            'avaliationId.exists' => 'A avaliação selecionada não existe.',
+        ]);
+
+        $comment = Comments::findOrFail($id);
+
         $comment->UserComentado = $request->UserComentado;
         $comment->comment = $request->comment;
         $comment->avaliationId = $request->avaliationId;
         $comment->updated_at = now();
-    
-        $comment->save();
-    
-        return redirect('/dashboard')
-            ->with('message', 'Comentário atualizado com sucesso!');
-    }
-    
 
+        $comment->save();
+
+        return redirect('/dashboard')->with('message', 'Comentário atualizado com sucesso!');
+    }
 
     public function destroy($id)
     {
-        comments::findorFail($id)->delete();
-        return redirect('/dashboard')->with('message', 'Cometário excluido com sucesso');
+        Comments::findOrFail($id)->delete();
+        return redirect('/dashboard')->with('message', 'Comentário excluído com sucesso');
     }
 }
